@@ -3,6 +3,7 @@
 # https://github.com/rveachkc/pymsteams/
 # reference: https://dev.outlook.com/connectors/reference
 import requests
+from django_rq import job
 
 
 class TeamsWebhookException(Exception):
