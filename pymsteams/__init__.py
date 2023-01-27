@@ -231,7 +231,6 @@ class connectorcard:
         
     @job('high')
     def send(self):
-        pass
         headers = {"Content-Type": "application/json"}
         r = requests.post(
             self.hookurl,
@@ -247,7 +246,6 @@ class connectorcard:
             return True
         else:
             raise TeamsWebhookException(r.text)
-    send.delay()
 
     def __init__(self, hookurl, http_proxy=None, https_proxy=None, http_timeout=60, verify=None):
         self.payload = {}
