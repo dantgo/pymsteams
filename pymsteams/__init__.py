@@ -228,16 +228,12 @@ class connectorcard:
         print("hookurl: %s" % self.hookurl)
         print("payload: %s" % self.payload)
         
-#QUEUE SEND
-
+    #QUEUE SEND - This queues but instantly (not working: 27/01/23)
     from django_rq import job
-    @job('high')
-    def send():
-        pass
-    send.delay()    
         
-
+    @job('high')
     def send(self):
+        pass
         headers = {"Content-Type": "application/json"}
         r = requests.post(
             self.hookurl,
@@ -253,6 +249,8 @@ class connectorcard:
             return True
         else:
             raise TeamsWebhookException(r.text)
+            
+    send.delay()  
 
     def __init__(self, hookurl, http_proxy=None, https_proxy=None, http_timeout=60, verify=None):
         self.payload = {}
