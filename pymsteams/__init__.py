@@ -3,7 +3,6 @@
 # https://github.com/rveachkc/pymsteams/
 # reference: https://dev.outlook.com/connectors/reference
 import requests
-from django_rq import job
 
 
 class TeamsWebhookException(Exception):
@@ -229,25 +228,26 @@ class connectorcard:
         print("hookurl: %s" % self.hookurl)
         print("payload: %s" % self.payload)
         
+    from django_rq import job       
     @job('high')
     def send(self):
         pass
         send.delay()
-            headers = {"Content-Type": "application/json"}
-            r = requests.post(
-                self.hookurl,
-                json=self.payload,
-                headers=headers,
-                proxies=self.proxies,
-                timeout=self.http_timeout,
-                verify=self.verify,
-            )
-            self.last_http_response = r
+        headers = {"Content-Type": "application/json"}
+        r = requests.post(
+            self.hookurl,
+            json=self.payload,
+            headers=headers,
+            proxies=self.proxies,
+            timeout=self.http_timeout,
+            verify=self.verify,
+        )
+        self.last_http_response = r
 
-            if r.status_code == requests.codes.ok:  # pylint: disable=no-member
-                return True
-            else:
-                raise TeamsWebhookException(r.text)
+        if r.status_code == requests.codes.ok:  # pylint: disable=no-member
+            return True
+        else:
+            raise TeamsWebhookException(r.text)
 
     def __init__(self, hookurl, http_proxy=None, https_proxy=None, http_timeout=60, verify=None):
         self.payload = {}
