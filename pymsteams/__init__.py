@@ -232,7 +232,7 @@ class connectorcard:
     @job('high')
     def send(self):
         pass
-        send.delay()
+
         headers = {"Content-Type": "application/json"}
         r = requests.post(
             self.hookurl,
