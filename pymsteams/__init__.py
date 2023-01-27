@@ -228,11 +228,15 @@ class connectorcard:
         print("hookurl: %s" % self.hookurl)
         print("payload: %s" % self.payload)
         
-    from django_rq import job       
+   #QUEUE SEND
+    from django_rq import job
     @job('high')
-    def send(self):
+    def send():
         pass
+    send.delay()    
+        
 
+    def send(self):
         headers = {"Content-Type": "application/json"}
         r = requests.post(
             self.hookurl,
