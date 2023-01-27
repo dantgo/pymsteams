@@ -228,7 +228,8 @@ class connectorcard:
         print("hookurl: %s" % self.hookurl)
         print("payload: %s" % self.payload)
         
-   #QUEUE SEND
+#QUEUE SEND
+
     from django_rq import job
     @job('high')
     def send():
